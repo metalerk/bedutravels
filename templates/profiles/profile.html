@@ -1,0 +1,70 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Bedutravels - Perfil</title>
+  <link rel="stylesheet" href="{% static 'css/index.css' %}">
+  <link rel="stylesheet" href="{% static 'css/destinos.css' %}">
+  <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+</head>
+<body>
+  <nav class="menu_main">
+      <a class="marca" href="#">
+        <strong>BEDUTRAVELS</strong>
+      </a>
+      <div>
+        {% if user.is_authenticated %}
+          <a href="#">Bienvenido {{ user.username.capitalize }}</a>
+          {% if user.is_superuser %}
+          <a href="/admin/" target="_blank">Admin Panel</a>
+          {% endif %}
+          <a href="/logout/">Cerrar Sesion</a>
+          {% else %}
+          <a href="">LogIn</a>
+          <a href="">SignIn</a>
+          {% endif %}
+      </div>
+  </nav>
+
+  <section class="profile-container padding-top-lg">
+    <div>
+      <div class="margin-bottom-sm">
+        <p class="title-font margin-bottom-lg text-center">INFORMACIÓN DE TU CUENTA EN BEDUTRAVELS</p>
+      </div>
+      <div  class="profile-info">
+        <form class="profile-inputs" action="{% url 'profile:save-profile' %}" method="POST">
+           {% csrf_token %}
+            Nombre: <input type="text" name="nombre" value="">
+            Apellidos: <input type="text" name="apellidos" value="">
+            Fecha de nacimiento: <input type="date" name="fechaNacimiento">
+            Tipo: <input type="text" name="tipo" value="">
+            <button class="button-tour margin-top-sm" style="align-self: center;" type="submit" name="button">
+              Guardar infromación
+            </button>
+            <a href="" class="margin-top-md">Cambiar contraseña</a>
+        </div>
+        <div class="profile-img">
+           <img class="margin-bottom-sm" src="{% static 'img/perfil_img.jpg' %}" alt="profile_image">
+           <button class="button-tour " type="button" name="button">Cambiar foto de perfil</button>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <footer class="margin-top-lg">
+    <ul>
+      <li>Bedu Travels</li>
+      <li>hola@bedutravels.com</li>
+    </ul>
+    <div class="social-media-container">
+      <img src="/static/perfiles/img/facebook.svg" alt="">
+      <img src="/static/perfiles/img/twitter.svg" alt="">
+      <img src="/static/perfiles/img/instagram.svg" alt="">
+    </div>
+  </footer>
+</body>
+</html>

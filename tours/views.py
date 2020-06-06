@@ -1,7 +1,6 @@
-from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-from .models import Tour
+from tours.models import Tour
 
 @login_required()
 def index(request):
@@ -16,31 +15,3 @@ def index(request):
             'user': request.user,
         }
     )
-
-def login_user(request):
-    
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        _next = request.GET.get('next', '/')
-        access = authenticate(username=username, password=password)
-        if access is not None:
-            login(request, access)
-            return redirect(_next)
-        else:
-            msg = 'Bad credentials!'
-    else:
-        msg = ''
-    
-    return render(
-        request,
-        'registration/login.html',
-        {
-            'msg': msg,
-        }
-    )
-
-def logout_user(request):
-    _next = request.GET.get('next', '/')
-    logout(request)
-    return redirect(_next)
