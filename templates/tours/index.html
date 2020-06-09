@@ -21,7 +21,7 @@
           {% endif %}
           <a href="{% url 'profile:logout_user' %}">Cerrar Sesion</a>
           {% else %}
-          <a href="">LogIn</a>
+          <a href="{% url 'profile:login_user' %}">LogIn</a>
           <a href="">SignIn</a>
           {% endif %}
         </div>
