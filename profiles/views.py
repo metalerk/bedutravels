@@ -53,5 +53,8 @@ def login_user(request):
 
 def logout_user(request):
     _next = request.GET.get('next', '/')
+    print('=========')
+    print(_next)
+    print('=========')
     logout(request)
     return redirect(_next)
