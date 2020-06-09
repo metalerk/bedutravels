@@ -1,6 +1,8 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-from tours.models import Tour
+from rest_framework import viewsets
+from tours.models import Tour, Zone
+from profiles.serializers import TourSerializer, ZoneSerializer
 
 @login_required()
 def index(request):
@@ -15,3 +17,13 @@ def index(request):
             'user': request.user,
         }
     )
+
+
+class TourViewSet(viewsets.ModelViewSet):
+    queryset = Tour.objects.all()
+    serializer_class = TourSerializer
+
+
+class ZoneViewSet(viewsets.ModelViewSet):
+    queryset = Zone.objects.all()
+    serializer_class = ZoneSerializer

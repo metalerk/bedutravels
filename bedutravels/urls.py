@@ -17,9 +17,18 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from rest_framework import routers
+from profiles.views import UserViewSet
+from tours.views import TourViewSet, ZoneViewSet
+
+router = routers.DefaultRouter()
+router.register(r'users', UserViewSet)
+router.register(r'tours', TourViewSet)
+router.register(r'zones', ZoneViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/', include(router.urls)),
     path('', include('tours.urls')),
     path('profile/', include('profiles.urls', namespace='profile')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -3,7 +3,9 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.urls import reverse
+from rest_framework import viewsets
 from tours.models import User as tours_user
+from profiles.serializers import TourUserSerializer
 from utils import list2str
 
 @login_required()
@@ -53,8 +55,10 @@ def login_user(request):
 
 def logout_user(request):
     _next = request.GET.get('next', '/')
-    print('=========')
-    print(_next)
-    print('=========')
     logout(request)
     return redirect(_next)
+
+
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = tours_user.objects.all().order_by('id')
+    serializer_class = TourUserSerializer
