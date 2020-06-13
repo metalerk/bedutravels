@@ -17,9 +17,13 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+
 from rest_framework import routers
+from graphene_django.views import GraphQLView
+
 from profiles.views import UserViewSet
 from tours.views import TourViewSet, ZoneViewSet
+from tours.schema import schema
 
 router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)
@@ -31,4 +35,5 @@ urlpatterns = [
     path('api/', include(router.urls)),
     path('', include('tours.urls')),
     path('profile/', include('profiles.urls', namespace='profile')),
+    path('graphql', GraphQLView.as_view(graphiql=True, schema=schema)),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
